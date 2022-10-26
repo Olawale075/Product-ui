@@ -2,26 +2,26 @@
 
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-
-import OffcanvasExample from './component/OffcanvasExample';
 import { Notification } from './component/Notification';
-import MessageConfiguration from './component/MessageConfiguration';
 import { Home } from './component/Home';
+import Templates from './component/Templates';
+import Template from './component/Template';
+import NewTemplate from './component/NewTemplate';
+import DeliveryReport from './component/Report';
+
 function App() {
   return (
     <div className="App">
-      <OffcanvasExample />
       <BrowserRouter>
         <Routes>
           <Route exact path="/" element={<Home />} />
-          <Route path="/Notification" element={<Notification />} />
+          <Route path="/notifications" element={<Notification />} />
+          <Route path="/new-template" element={<NewTemplate />} />
+          <Route path="/templates" element={<Templates />} />
+          <Route path="/templates/:id" element={<Template />} />
+          <Route path="/report" element={<DeliveryReport />} />
           <Route exact path="/Home" element={<Home />} />{' '}
-          <Route
-            path="/MessageConfiguration"
-            element={<MessageConfiguration />}
-          />
         </Routes>
       </BrowserRouter>
       ,
