@@ -9,6 +9,7 @@ import Templates from './component/Templates';
 import Template from './component/Template';
 import NewTemplate from './component/NewTemplate';
 import DeliveryReport from './component/Report';
+import Variable from './component/Variable';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/templates" element={<Templates />} />
           <Route path="/templates/:id" element={<Template />} />
           <Route path="/report" element={<DeliveryReport />} />
+          <Route path="/variables" element={<Variable />} />
           <Route exact path="/Home" element={<Home />} />{' '}
         </Routes>
       </BrowserRouter>

@@ -4,7 +4,7 @@ import React from "react";
 import TableComponent from "../element/TableComponent";
 import Layout from "./partials/Layout";
 import { BsEnvelope } from "react-icons/bs";
-import { FaRegSun, FaBell, FaInfoCircle } from "react-icons/fa";
+import { FaRegSun, FaBell, FaInfoCircle, FaRegEnvelopeOpen } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 export const Home = () => {
@@ -37,7 +37,8 @@ export const Home = () => {
         <div className="col-sm-12 col-md-4 text-start">
           <div className="shadow rounded p-3">
             <div className="text-end">
-              <FaRegSun style={IconStyle} className="text-muted" />
+            
+              <FaRegEnvelopeOpen style={IconStyle} className="text-muted" />
             </div>
             <p>Message Templates</p>
             <Link to="/templates">View</Link>
@@ -46,10 +47,10 @@ export const Home = () => {
         <div className="col-sm-12 col-md-4 text-start">
           <div className="shadow rounded p-3">
             <div className="text-end">
-              <FaBell style={IconStyle} className="text-muted" />
+            <FaRegSun style={IconStyle} className="text-muted" />
             </div>
-            <p>Notifications</p>
-            <Link to="/notifications">View</Link>
+            <p>Variable Config</p>
+            <Link to="/variables">View</Link>
           </div>
         </div>
       </div>
