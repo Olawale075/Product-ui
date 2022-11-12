@@ -12,6 +12,8 @@ import Layout from "./partials/Layout";
 import { useEffect, useState } from "react";
 import { FaFilter } from "react-icons/fa";
 import { getDeliveryStatus, getSMSTypes, SMS_URL } from "../api/base";
+import DateRanges from '../element/DateRange';
+
 
 const DeliveryReport = () => {
   const [loading, setLoading] = useState(true);
@@ -52,6 +54,7 @@ const DeliveryReport = () => {
     )
       .then((res) => res.json())
       .then((data) => {
+        console.log(data)
         setIsFiltering(false);
         setData(data.data);
       });
@@ -72,7 +75,13 @@ const DeliveryReport = () => {
       ) : (
         <Container>
           <h1 className="fw-bolder">Reports</h1>
-          <Row style={{ alignItems: "center" }}>
+          <Row style={{ alignItems: 'center' }}>
+              <Col>
+                <Form.Group className="mb-3">
+                <Form.Label>Date Range</Form.Label>
+                  <DateRanges />
+                  </Form.Group>
+            </Col>
             <Col>
               <Form.Group className="mb-3">
                 <Form.Label>SMS Type</Form.Label>
@@ -101,7 +110,7 @@ const DeliveryReport = () => {
             </Col>
             <Col md="2">
               <Button onClick={handleFilter}>
-                <FaFilter /> Filter{" "}
+                <FaFilter /> Filter{' '}
                 {isFiltering && <Spinner animation="grow" size="sm"></Spinner>}
               </Button>
             </Col>
@@ -133,10 +142,20 @@ const DeliveryReport = () => {
                 </tbody>
               </Table>
               <Pagination>
-                <Pagination.First onClick={e => handlePagination(0)}/>
-                <Pagination.Prev onClick={e => handlePagination(data.first ? 0 : page-=1)}/>
-                <Pagination.Next onClick={e => handlePagination(data.last ? data.totalPages : page+=1)}/>
-                <Pagination.Last onClick={e => handlePagination(data.totalPages)}/>
+                <Pagination.First onClick={(e) => handlePagination(0)} />
+                <Pagination.Prev
+                  onClick={(e) =>
+                    handlePagination(data.first ? 0 : (page -= 1))
+                  }
+                />
+                <Pagination.Next
+                  onClick={(e) =>
+                    handlePagination(data.last ? data.totalPages : (page += 1))
+                  }
+                />
+                <Pagination.Last
+                  onClick={(e) => handlePagination(data.totalPages)}
+                />
               </Pagination>
             </div>
           )}
