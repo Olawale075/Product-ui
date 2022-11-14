@@ -6,7 +6,7 @@ import { FaPlus } from "react-icons/fa"
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
-import { getVariables } from "../api/base";
+import { getVariables, VARIABLE_URL } from "../api/base";
 import swal from 'sweetalert';
 
 const InitialValue = {actionName : '', id : null}
@@ -47,7 +47,7 @@ const Variable = () => {
     });
   };
   const handleAddVariable = () => {
-    fetch(`http://146.70.88.25:8082/api/v1/sms/variable`, {
+    fetch(`${VARIABLE_URL}`, {
         method: "POST",
         body: JSON.stringify({actionName : values.actionName}),
         headers: {
@@ -73,7 +73,7 @@ const Variable = () => {
     setShowAddConfig(true)
   }
   const handleUpdate = () => {
-    fetch(`http://146.70.88.25:8082/api/v1/sms/variable/${values.id}`, {
+    fetch(`${VARIABLE_URL}/${values.id}`, {
       method: "PUT",
       body: JSON.stringify({actionName : values.actionName}),
       headers: {
@@ -104,7 +104,7 @@ const Variable = () => {
     
   }
   const handleDelete = () => {
-    fetch(`http://146.70.88.25:8082/api/v1/sms/variable/${values.id}`, {method : 'DELETE'})
+    fetch(`${VARIABLE_URL}/${values.id}`, {method : 'DELETE'})
           .then((res) => res.json())
           .then((data) => {
             setShowDelete(false)
