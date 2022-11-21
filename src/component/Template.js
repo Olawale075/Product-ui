@@ -24,6 +24,8 @@ const Template = () => {
   const [variables, setVariables] = useState(null);
   const [btnActive, setBtnActive] = useState(null);
   const [show, setShow] = useState(false);
+  const [wordCount, setWordCount] = useState(0);
+  const [wordExceeded, setWordExceeded] = useState('success');
   let navigate = useNavigate();
 
   useEffect(() => {
@@ -47,11 +49,13 @@ const Template = () => {
         setSMSTypes(sms);
         setLanguages(languages);
         setSeparators(separator);
-        setVariables(variables);
+        setVariables(variables.content);
         setTemplate(template);
         setBtnActive(activeTemplate.key)
         setValues(initialValues)
         setLoading(false);
+        setWordCount(initialValues.template.length)
+        setWordExceeded(initialValues.template.length > 160 ? 'danger' : 'success')
       } catch (err) {
         console.log(err);
       }
@@ -66,6 +70,11 @@ const Template = () => {
     });
     if (e.type === "click") {
       setBtnActive(value);
+    }
+    if(name === 'template'){
+      setWordCount(value.length)
+      setWordExceeded(value.length > 160 ? 'danger' : 'success')
+      
     }
   };
   const handleSubmit = e => {
@@ -90,7 +99,7 @@ const Template = () => {
         .then((res) => res.json())
         .then((data) => {
             console.log(data)
-          if (data.status == 200) {
+          if (data.status === 200) {
             setShow(true);
             setTimeout(() => {
               navigate("/templates");
@@ -103,6 +112,15 @@ const Template = () => {
     setShow(true);
   };
   const handleClose = () => setShow(false);
+  const handleVariableClick = e => {
+    const newValue = values.template + ' ' + e
+    setValues({
+      ...values,
+      template: newValue,
+    });
+    setWordCount(newValue.length)
+    setWordExceeded(newValue.length > 160 ? 'danger' : 'success')
+  }
   return (
     <Layout>
       <Container>
@@ -139,7 +157,8 @@ const Template = () => {
                 </Col>
                 <Col sm={12}>
                   <Form.Group className="mb-3 border rounded p-2">
-                    <div className="my-2">
+                    <div className="my-2 d-flex justify-content-between">
+                      <div>
                       {languages &&
                         languages.map((lang) => (
                           <Button
@@ -156,6 +175,10 @@ const Template = () => {
                             {lang.description}
                           </Button>
                         ))}
+                      </div>
+                      <div className=''>
+                        <span className={`text text-${wordExceeded}`}>{wordCount}</span>/160
+                      </div>
                     </div>
 
                     <Form.Control
@@ -166,6 +189,7 @@ const Template = () => {
                       name="template"
                       value={values.template}
                       placeholder="Message"
+                      maxLength={160}
                     />
                     <div>
                       <small className="fw-bold">
@@ -178,6 +202,8 @@ const Template = () => {
                             bg="secondary"
                             className="mx-1"
                             key={variable.id}
+                            style={{cursor : 'pointer'}}
+                            onClick={() => handleVariableClick(`{{${variable.actionName}}}`)}
                           >
                             {`{{${variable.actionName}}}`}
                           </Badge>

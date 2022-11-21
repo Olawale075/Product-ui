@@ -3,7 +3,6 @@ import Layout from "./partials/Layout";
 import * as ReactBootStrap from 'react-bootstrap';
 import { Link } from "react-router-dom";
 import { FaFileAlt } from "react-icons/fa";
-import Toast from 'react-bootstrap/Toast';
 import Spinner from 'react-bootstrap/Spinner';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
@@ -26,7 +25,10 @@ const Templates = () => {
         setLoading(false)
         setTemplates(data)
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setLoading(false)
+        console.log(err)
+      });
   }, []);
 
   const handleDelete = id => {
