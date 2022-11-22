@@ -12,7 +12,6 @@ import {
 } from "../api/base";
 
 
-
 const Template = () => {
   const { id } = useParams("id");
   const [loading, setLoading] = useState(true);
@@ -44,6 +43,7 @@ const Template = () => {
             destinationFolder: template.destinationFolder,
             separator: template.separator,
             key: activeTemplate.key,
+            templateAgnostic : template.templateAgnostic,
             template: activeTemplate.template,
         };
         setSMSTypes(sms);
@@ -76,14 +76,35 @@ const Template = () => {
       setWordExceeded(value.length > 160 ? 'danger' : 'success')
       
     }
+    if (name === 'key'){
+      const temp = {key : value, isActive : false, template : ''}
+      if (!values.templateAgnostic.find(temp => temp.key === value)){
+        const agnostic = [temp, ...values.templateAgnostic]
+        setValues({
+          ...values, templateAgnostic : agnostic, template : temp.template
+        })
+
+      }else{
+        setValues({ ...values, template : values.templateAgnostic.find(temp => temp.key === value).template})
+      }
+      
+    }
   };
   const handleSubmit = e => {
     e.preventDefault();
+    const newTempAgnostic = values.templateAgnostic.map(obj => {
+      if (btnActive === obj.key){
+        obj.isActive = true 
+        obj.template = values.template
+      }else{
+        obj.isActive = false
+      }
+      
+      return obj
+    })
     const data = {
         ...values,
-        templateAgnostic: [
-          { key: values.key, template: values.template, isActive: true },
-        ],
+        templateAgnostic: newTempAgnostic
     };
     delete data.key;
     delete data.template;
