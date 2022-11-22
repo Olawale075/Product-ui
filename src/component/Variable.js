@@ -6,6 +6,7 @@ import { FaPlus } from "react-icons/fa"
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
+import Pagination from 'react-bootstrap/Pagination';
 import { getVariables, VARIABLE_URL } from "../api/base";
 import swal from 'sweetalert';
 
@@ -17,6 +18,7 @@ const Variable = () => {
     const [variables, setVariables] = useState(null);
     const [showDelete, setShowDelete] = useState(false)
     const [showAddConfig, setShowAddConfig] = useState(false);
+    const [content, setContent] = useState(null)
     const [isEdit, setIsEdit] = useState(false)
     const handleCloseAddConfig = () => setShowAddConfig(false);
     const handleShowAddConfig = () => {
@@ -30,7 +32,8 @@ const Variable = () => {
     const fetchAPI = async () => {
         try{
             const variables = await getVariables()
-            setVariables(variables)
+            setVariables(variables.content)
+            setContent(variables)
             setLoading(false)
         }catch(err) {
 
@@ -115,6 +118,7 @@ const Variable = () => {
           })
           .catch((err) => console.log(err));
   }
+  console.log(content)
   return (
     <Layout>
       <div className="mb-3 text-end">
@@ -146,6 +150,14 @@ const Variable = () => {
             }
           </tbody>
         </ReactBootStrap.Table> 
+        <Pagination>
+        <Pagination.Item >
+          1
+        </Pagination.Item>
+        <Pagination.Item >
+        {content.totalPages}
+        </Pagination.Item>
+        </Pagination>
       <Modal
         show={showAddConfig}
         onHide={handleCloseAddConfig}
