@@ -23,8 +23,7 @@ const Template = () => {
   const [variables, setVariables] = useState(null);
   const [btnActive, setBtnActive] = useState(null);
   const [show, setShow] = useState(false);
-  const [wordCount, setWordCount] = useState(0);
-  const [wordExceeded, setWordExceeded] = useState('success');
+  const [wordCount, setWordCount] = useState({count : 0, maxCount : 160, exceeded : 'success'});
   let navigate = useNavigate();
 
   useEffect(() => {
@@ -54,8 +53,7 @@ const Template = () => {
         setBtnActive(activeTemplate.key)
         setValues(initialValues)
         setLoading(false);
-        setWordCount(initialValues.template.length)
-        setWordExceeded(initialValues.template.length > 160 ? 'danger' : 'success')
+        setWordCount({...wordCount, count : initialValues.template.length, exceeded : 'success'})
       } catch (err) {
         console.log(err);
       }
@@ -72,8 +70,8 @@ const Template = () => {
       setBtnActive(value);
     }
     if(name === 'template'){
-      setWordCount(value.length)
-      setWordExceeded(value.length > 160 ? 'danger' : 'success')
+      setWordCount({
+        ...wordCount, count : value.length, exceeded : value.length > wordCount.maxCount ? 'danger' : 'success'})
       
     }
     if (name === 'key'){
@@ -108,6 +106,7 @@ const Template = () => {
     };
     delete data.key;
     delete data.template;
+    console.log(JSON.stringify(data))
     fetch(`${TEMPLATE_URL}/${id}`, {
         method: "PUT",
         body: JSON.stringify(data),
@@ -139,8 +138,7 @@ const Template = () => {
       ...values,
       template: newValue,
     });
-    setWordCount(newValue.length)
-    setWordExceeded(newValue.length > 160 ? 'danger' : 'success')
+    setWordCount({...wordCount, count : newValue.length, exceeded : newValue.length > 160 ? 'danger' : 'success'})
   }
   return (
     <Layout>
@@ -198,7 +196,7 @@ const Template = () => {
                         ))}
                       </div>
                       <div className=''>
-                        <span className={`text text-${wordExceeded}`}>{wordCount}</span>/160
+                        <span className={`text text-${wordCount.exceeded}`}>{wordCount.count}</span>/160
                       </div>
                     </div>
 
@@ -270,7 +268,7 @@ const Template = () => {
                   </Form.Group>
                 </Col>
               </Row>
-              <Button variant="dark" type="submit">
+              <Button variant="dark" type="submit" disabled={wordCount.count > wordCount.maxCount ? true : false}>
                 Edit
               </Button>
             </Form>

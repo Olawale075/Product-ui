@@ -26,6 +26,7 @@ const initialValues = {
   separator: "CARET",
   key: "en",
   template: "",
+  templateAgnostic : [],
 };
 
 const NewTemplate = () => {
@@ -37,6 +38,8 @@ const NewTemplate = () => {
   const [variables, setVariables] = useState(null);
   const [btnActive, setBtnActive] = useState("en");
   const [show, setShow] = useState(false);
+  const [wordCount, setWordCount] = useState({count : 0, maxCount : 160, exceeded : 'success'});
+
   let navigate = useNavigate();
   useEffect(() => {
     const fetchAPI = async () => {
@@ -48,8 +51,11 @@ const NewTemplate = () => {
         setSMSTypes(sms);
         setLanguages(languages);
         setSeparators(separator);
-        setVariables(variables);
+        setVariables(variables.content);
         setLoading(false);
+        setValues({
+          ...values, templateAgnostic : languages.map((lang) => ({key : lang.value, isActive : lang.value === initialValues.key ? true : false, template:'',})),
+        })
       } catch (err) {
         console.log(err);
       }
@@ -66,19 +72,36 @@ const NewTemplate = () => {
     if (e.type === "click") {
       setBtnActive(value);
     }
+    if(name === 'template'){
+      setWordCount({
+        ...wordCount, count : value.length, exceeded : value.length > wordCount.maxCount ? 'danger' : 'success'})
+      
+    }
+    if (name === 'key'){
+        setValues({ ...values, template : values.templateAgnostic.find(temp => temp.key === value).template})
+      
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const newTempAgnostic = values.templateAgnostic.map(obj => {
+      if (btnActive === obj.key){
+        obj.isActive = true 
+        obj.template = values.template
+      }else{
+        obj.isActive = false
+      }
+      
+      return obj
+    })
     const data = {
-      ...values,
-      templateAgnostic: [
-        { key: values.key, template: values.template, isActive: true },
-      ],
+        ...values,
+        templateAgnostic: newTempAgnostic
     };
     delete data.key;
     delete data.template;
-    fetch(`${TEMPLATE_URL}`, {
+    fetch(`${TEMPLATE_URL}/`, {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
@@ -97,12 +120,19 @@ const NewTemplate = () => {
         }
       })
       .catch((err) => console.log(err));
-    setValues(initialValues);
   };
   const handleShow = (e) => {
     setShow(true);
   };
   const handleClose = () => setShow(false);
+  const handleVariableClick = e => {
+    const newValue = values.template + ' ' + e
+    setValues({
+      ...values,
+      template: newValue,
+    });
+    setWordCount({...wordCount, count : newValue.length, exceeded : newValue.length > 160 ? 'danger' : 'success'})
+  }
   return (
     <Layout>
       {loading ? (
@@ -138,7 +168,8 @@ const NewTemplate = () => {
                 </Col>
                 <Col sm={12}>
                   <Form.Group className="mb-3 border rounded p-2">
-                    <div className="my-2">
+                    <div className="my-2 d-flex justify-content-between">
+                      <div>
                       {languages &&
                         languages.map((lang) => (
                           <Button
@@ -155,6 +186,10 @@ const NewTemplate = () => {
                             {lang.description}
                           </Button>
                         ))}
+                      </div>
+                        <div className=''>
+                          <span className={`text text-${wordCount.exceeded}`}>{wordCount.count}</span>/160
+                        </div>
                     </div>
 
                     <Form.Control
@@ -165,6 +200,7 @@ const NewTemplate = () => {
                       name="template"
                       value={values.template}
                       placeholder="Message"
+                      maxLength={wordCount.maxCount}
                     />
                     <div>
                       <small className="fw-bold">
@@ -177,6 +213,8 @@ const NewTemplate = () => {
                             bg="secondary"
                             className="mx-1"
                             key={variable.id}
+                            style={{cursor : 'pointer'}}
+                            onClick={() => handleVariableClick(`{{${variable.actionName}}}`)}
                           >
                             {`{{${variable.actionName}}}`}
                           </Badge>
@@ -222,7 +260,7 @@ const NewTemplate = () => {
                   </Form.Group>
                 </Col>
               </Row>
-              <Button variant="dark" type="submit">
+              <Button variant="dark" type="submit" disabled={wordCount.count > wordCount.maxCount ? true : false}>
                 Submit
               </Button>
             </Form>
