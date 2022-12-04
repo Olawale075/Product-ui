@@ -35,9 +35,9 @@ const Templates = () => {
         fetch(`http://146.70.88.25:8082/api/v1/sms/template/${id}`, {method : 'DELETE'})
           .then((res) => res.json())
           .then((data) => {
-            setTemplates(templates.filter(template => {
-                return template.id !== id
-            }))
+            // setTemplates(templates.filter(template => {
+            //     return template.id !== id
+            // }))
             setShow(false)
           })
           .catch((err) => console.log(err));

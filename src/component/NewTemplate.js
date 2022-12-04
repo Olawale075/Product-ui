@@ -101,25 +101,26 @@ const NewTemplate = () => {
     };
     delete data.key;
     delete data.template;
-    fetch(`${TEMPLATE_URL}/`, {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.status == 201) {
-          setShow(true);
-          setTimeout(() => {
-            navigate("/templates");
-          }, 2000);
-        }
-      })
-      .catch((err) => console.log(err));
+    console.log(data)
+    // fetch(`${TEMPLATE_URL}/`, {
+    //   method: "POST",
+    //   body: JSON.stringify(data),
+    //   headers: {
+    //     "Access-Control-Allow-Origin": "*",
+    //     accept: "application/json",
+    //     "Content-Type": "application/json",
+    //   },
+    // })
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     if (data.status == 201) {
+    //       setShow(true);
+    //       setTimeout(() => {
+    //         navigate("/templates");
+    //       }, 2000);
+    //     }
+    //   })
+    //   .catch((err) => console.log(err));
   };
   const handleShow = (e) => {
     setShow(true);
