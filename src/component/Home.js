@@ -1,11 +1,8 @@
 /** @format */
-import Container from "react-bootstrap/Container";
 import React from "react";
-import TableComponent from "../element/TableComponent";
-import Layout from "./partials/Layout";
-import { BsEnvelope } from "react-icons/bs";
 import { FaRegSun, FaBell, FaInfoCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import Protected from "./partials/Protected";
 
 export const Home = () => {
   const IconStyle = {
@@ -13,7 +10,7 @@ export const Home = () => {
     textAlign: "right",
   };
   return (
-    <Layout>
+    <Protected>
       <h1>Welcome Matanmi!</h1>
       <div class="alert alert-info alert-dismissible fade show" role="alert">
         <strong>Navigate</strong> through the platform with the sections below.
@@ -53,6 +50,6 @@ export const Home = () => {
           </div>
         </div>
       </div>
-    </Layout>
+    </Protected>
   );
 };
