@@ -18,6 +18,7 @@ const Variable = () => {
     const [variables, setVariables] = useState(null);
     const [showDelete, setShowDelete] = useState(false)
     const [showAddConfig, setShowAddConfig] = useState(false);
+    const [pageNumber, setPageNumber] = useState(0)
     const [content, setContent] = useState(null)
     const [isEdit, setIsEdit] = useState(false)
     const handleCloseAddConfig = () => setShowAddConfig(false);
@@ -118,7 +119,22 @@ const Variable = () => {
           })
           .catch((err) => console.log(err));
   }
-  console.log(content)
+  const handlePagination = (number) => {
+    setLoading(true)
+    setPageNumber(number)
+    const fetchAPI = async () => {
+      try{
+          const variables = await getVariables(number)
+          setVariables(variables.content)
+          setContent(variables)
+          setLoading(false)
+      }catch(err) {
+
+      }
+  }
+  fetchAPI();
+  }
+  console.dir(content)
   return (
     <Layout>
       <div className="mb-3 text-end">
@@ -151,12 +167,20 @@ const Variable = () => {
           </tbody>
         </ReactBootStrap.Table> 
         <Pagination>
-        <Pagination.Item >
-          1
+        {content && !content.first ? (
+          <Pagination.Item onClick={() => handlePagination(pageNumber-1)}>
+          Prev
         </Pagination.Item>
-        <Pagination.Item >
-        {content.totalPages}
-        </Pagination.Item>
+          ): ''}
+          
+          <Pagination.Item >
+            {pageNumber+1}
+          </Pagination.Item>
+          {content && !content.last ? (
+          <Pagination.Item onClick={() => handlePagination(pageNumber+1)}>
+          Next
+          </Pagination.Item>
+          ): ''}
         </Pagination>
       <Modal
         show={showAddConfig}
