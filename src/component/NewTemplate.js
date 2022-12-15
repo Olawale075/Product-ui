@@ -69,17 +69,23 @@ const NewTemplate = () => {
       ...values,
       [name]: value,
     });
-    if (e.type === "click") {
-      setBtnActive(value);
-    }
+    
     if(name === 'template'){
       setWordCount({
         ...wordCount, count : value.length, exceeded : value.length > wordCount.maxCount ? 'danger' : 'success'})
       
     }
     if (name === 'key'){
-        setValues({ ...values, template : values.templateAgnostic.find(temp => temp.key === value).template})
-      
+      const newValues = values.templateAgnostic.map(temp => {
+        if (temp.key === btnActive){
+          return {...temp, template : values.template}
+        }
+        return temp
+      });
+      setBtnActive(value)
+      setValues({
+        ...values, templateAgnostic : newValues, template : values.templateAgnostic.find(temp => temp.key === value).template
+      })  
     }
   };
 
@@ -102,25 +108,25 @@ const NewTemplate = () => {
     delete data.key;
     delete data.template;
     console.log(data)
-    // fetch(`${TEMPLATE_URL}/`, {
-    //   method: "POST",
-    //   body: JSON.stringify(data),
-    //   headers: {
-    //     "Access-Control-Allow-Origin": "*",
-    //     accept: "application/json",
-    //     "Content-Type": "application/json",
-    //   },
-    // })
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     if (data.status == 201) {
-    //       setShow(true);
-    //       setTimeout(() => {
-    //         navigate("/templates");
-    //       }, 2000);
-    //     }
-    //   })
-    //   .catch((err) => console.log(err));
+    fetch(`${TEMPLATE_URL}/`, {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.status === 201) {
+          setShow(true);
+          setTimeout(() => {
+            navigate("/templates");
+          }, 2000);
+        }
+      })
+      .catch((err) => console.log(err));
   };
   const handleShow = (e) => {
     setShow(true);
@@ -212,9 +218,8 @@ const NewTemplate = () => {
                         variables.map((variable) => (
                           <Badge
                             bg="secondary"
-                            className="mx-1"
+                            className="mx-1 variable__btn"
                             key={variable.id}
-                            style={{cursor : 'pointer'}}
                             onClick={() => handleVariableClick(`{{${variable.actionName}}}`)}
                           >
                             {`{{${variable.actionName}}}`}
