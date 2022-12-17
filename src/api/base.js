@@ -15,7 +15,7 @@ export const getVariables = (page=0, size=50) => {
 
 export const getTemplate = id => {
     return (
-        fetch(`${TEMPLATE_URL}/${id}`)
+        fetch(`http://146.70.88.25:8082/api/v1/sms/template/1`)
         .then(res => res.json())
         .then(data => data)
     )
