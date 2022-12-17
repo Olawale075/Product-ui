@@ -5,7 +5,7 @@ const Sidebar = () => {
         <div className="bg-light vh-100">
             <div className="text-center p-3">
                 <img src={process.env.PUBLIC_URL + '/Avatar.png'} className='rounded-circle img-fluid' 
-                style={{maxWidth : '100px'}}/>
+                style={{maxWidth : '100px'}} alt='dp'/>
                 <h6>Oluwaseun Matanmi</h6>
             </div>
             <div className="px-5">
