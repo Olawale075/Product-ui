@@ -2,10 +2,12 @@ export const BASE_URL = 'http://146.70.88.25:8082/api/v1/'
 
 export const SMS_URL = `${BASE_URL}sms/`
 export const TEMPLATE_URL = `${SMS_URL}template`
+export const VARIABLE_URL = `http://146.70.88.25:8082/api/v1/variable`
 
-export const getVariables = () => {
+export const getVariables = (page=0, size=50) => {
+    
     return (
-        fetch(`${SMS_URL}variable`)
+        fetch(`${VARIABLE_URL}?page=${page}&size=${size}`)
         .then(res => res.json())
         .then(data => data)
     )
@@ -13,7 +15,7 @@ export const getVariables = () => {
 
 export const getTemplate = id => {
     return (
-        fetch(`${TEMPLATE_URL}/${id}`)
+        fetch(`http://146.70.88.25:8082/api/v1/sms/template/1`)
         .then(res => res.json())
         .then(data => data)
     )

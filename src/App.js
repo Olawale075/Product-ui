@@ -10,6 +10,7 @@ import Templates from './component/Templates';
 import Template from './component/Template';
 import NewTemplate from './component/NewTemplate';
 import DeliveryReport from './component/Report';
+import Variable from './component/Variable';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/report" element={<DeliveryReport />} />
           <Route path="/login" element={<Login />} />
           <Route exact path="/home" element={<Home />} />{' '}
+          <Route path="/variables" element={<Variable />} />
         </Routes>
       </BrowserRouter>
       ,
