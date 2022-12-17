@@ -3,6 +3,7 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Login from './component/auth/Login'
 import { Notification } from './component/Notification';
 import { Home } from './component/Home';
 import Templates from './component/Templates';
@@ -22,8 +23,9 @@ function App() {
           <Route path="/templates" element={<Templates />} />
           <Route path="/templates/:id" element={<Template />} />
           <Route path="/report" element={<DeliveryReport />} />
+          <Route path="/login" element={<Login />} />
+          <Route exact path="/home" element={<Home />} />{' '}
           <Route path="/variables" element={<Variable />} />
-          <Route exact path="/Home" element={<Home />} />{' '}
         </Routes>
       </BrowserRouter>
       ,
