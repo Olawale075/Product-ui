@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Container, Form, Button, Row, Col } from "react-bootstrap";
 import {useNavigate} from 'react-router-dom'
 const initialValues = {
-    username : 'doe',
+    username : '',
     password : '',
 
 }

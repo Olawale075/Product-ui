@@ -1,4 +1,3 @@
-import Layout from "./partials/Layout";
 import {
   Button,
   Col,
@@ -17,7 +16,8 @@ import {
   getVariables,
   TEMPLATE_URL,
 } from "../api/base";
-import { redirect, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import Protected from "./partials/Protected";
 const initialValues = {
   smsType: "FUND_TRANSFER",
   shortName: "",
@@ -141,7 +141,7 @@ const NewTemplate = () => {
     setWordCount({...wordCount, count : newValue.length, exceeded : newValue.length > 160 ? 'danger' : 'success'})
   }
   return (
-    <Layout>
+    <Protected>
       {loading ? (
         <Spinner animation="grow" className="m-3" />
       ) : (
@@ -289,7 +289,7 @@ const NewTemplate = () => {
           </Modal>
         </Container>
       )}
-    </Layout>
+    </Protected>
   );
 };
 

@@ -12,7 +12,7 @@ import Layout from "./partials/Layout";
 import { useEffect, useState } from "react";
 import { FaFilter } from "react-icons/fa";
 import { getDeliveryStatus, getSMSTypes, SMS_URL } from "../api/base";
-import DateRanges from '../element/DateRange';
+// import DateRanges from '../element/DateRange';
 
 
 const DeliveryReport = () => {
@@ -79,7 +79,7 @@ const DeliveryReport = () => {
               <Col>
                 <Form.Group className="mb-3">
                 <Form.Label>Date Range</Form.Label>
-                  <DateRanges />
+                  {/* <DateRanges /> */}
                   </Form.Group>
             </Col>
             <Col>

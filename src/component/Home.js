@@ -1,9 +1,6 @@
 /** @format */
 import React from "react";
-import TableComponent from "../element/TableComponent";
-import Layout from "./partials/Layout";
-import { BsEnvelope } from "react-icons/bs";
-import { FaRegSun, FaBell, FaInfoCircle, FaRegEnvelopeOpen } from "react-icons/fa";
+import { FaRegSun,FaInfoCircle, FaRegEnvelopeOpen } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Protected from "./partials/Protected";
 

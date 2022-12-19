@@ -1,11 +1,11 @@
 import { Container } from 'react-bootstrap';
-import Layout from './partials/Layout'
+import Protected from './partials/Protected';
 
 
 export const Notification = () => {
  
   return (
-    <Layout>
+    <Protected>
       <Container fluid className="p-5">
         <h1>Notifications</h1>
         <div class="alert alert-info alert-dismissible fade show" role="alert">
@@ -16,6 +16,6 @@ export const Notification = () => {
 
         </div>
       </Container>
-    </Layout>
+    </Protected>
   );
 };

@@ -1,4 +1,4 @@
-import Layout from "./partials/Layout";
+import Protected from "./partials/Protected";
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Button, Col, Container, Form, Row, Spinner, Badge, Modal } from "react-bootstrap";
@@ -141,7 +141,7 @@ const Template = () => {
     setWordCount({...wordCount, count : newValue.length, exceeded : newValue.length > 160 ? 'danger' : 'success'})
   }
   return (
-    <Layout>
+    <Protected>
       <Container>
         {loading && <Spinner animation="grow" className="m-3" />}
         {template && (
@@ -291,7 +291,7 @@ const Template = () => {
             </Button>
         </Modal.Footer>
     </Modal>
-    </Layout>
+    </Protected>
   );
 };
 

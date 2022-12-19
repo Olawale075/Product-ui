@@ -1,4 +1,4 @@
-import Layout from "./partials/Layout";
+import Protected from "./partials/Protected";
 import * as ReactBootStrap from 'react-bootstrap';
 import Modal from "react-bootstrap/Modal";
 import { useState, useEffect } from "react";
@@ -136,7 +136,7 @@ const Variable = () => {
   }
   console.dir(content)
   return (
-    <Layout>
+    <Protected>
       <div className="mb-3 text-end">
         <Button variant="dark" onClick={handleShowAddConfig} title="Add Variable">
             <FaPlus />
@@ -232,7 +232,7 @@ const Variable = () => {
           <Button variant="danger" onClick={handleDelete}>Yes Delete</Button>
         </Modal.Footer>
       </Modal>
-    </Layout>
+    </Protected>
   );
 };
 

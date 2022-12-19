@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Layout from "./partials/Layout";
+import Protected from "./partials/Protected";
 import * as ReactBootStrap from 'react-bootstrap';
 import { Link } from "react-router-dom";
 import { FaFileAlt } from "react-icons/fa";
@@ -43,7 +43,7 @@ const Templates = () => {
           .catch((err) => console.log(err));
   }
   return (
-    <Layout>
+    <Protected>
       <div>
         
         <div className="mb-3 text-end">
@@ -96,7 +96,7 @@ const Templates = () => {
           <Button variant="danger" onClick={e => handleDelete(id)}>Understood</Button>
         </Modal.Footer>
       </Modal>
-    </Layout>
+    </Protected>
   );
 };
 
