@@ -2,8 +2,9 @@ export const BASE_URL = 'http://146.70.88.25:8082/api/v1/'
 
 export const SMS_URL = `${BASE_URL}sms/`
 export const TEMPLATE_URL = `${SMS_URL}template`
-export const VARIABLE_URL = `http://146.70.88.25:8082/api/v1/variable`
-
+// export const VARIABLE_URLs = `http://146.70.88.25:8082/api/v1/variable`
+// 'http://localhost:8080/api/v1/product'
+export const VARIABLE_URL = `http://localhost:8080/api/v1/product`
 export const getVariables = (page=0, size=50) => {
     
     return (

@@ -3,29 +3,37 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Login from './component/auth/Login'
+// import Login from './component/Login'
 import { Notification } from './component/Notification';
 import { Home } from './component/Home';
 import Templates from './component/Templates';
 import Template from './component/Template';
 import NewTemplate from './component/NewTemplate';
 import DeliveryReport from './component/Report';
-import Variable from './component/Variable';
+import Variable from './services/ProductService';
+import AddProductComponent from './component/AddProductComponent';
+import ProductComponent from './component/ProductComponent';
+import UserView from './component/UserView';
+import Shoe from './type/Shoe';
+import Cross from './type/Cross';
+import ProductService from './services/ProductService';
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route exact path="/" element={<Home />} />
-          <Route path="/notifications" element={<Notification />} />
+          <Route exact path="/" element={<Home />} /> 
+           <Route path="/product" element={<ProductComponent />} />
+          <Route path="/allWear.com" element={<UserView />} />
           <Route path="/new-template" element={<NewTemplate />} />
-          <Route path="/templates" element={<Templates />} />
+          <Route path="/shoes" element={<Shoe />} />
           <Route path="/templates/:id" element={<Template />} />
-          <Route path="/report" element={<DeliveryReport />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/product" element={<ProductComponent />} />
+          {/* <Route path="/login" element={<Login />} /> */}
           <Route exact path="/home" element={<Home />} />{' '}
-          <Route path="/variables" element={<Variable />} />
+          <Route path="/product/service" element={<ProductService />} />
+          <Route path="/cross" element={<Cross />} />
         </Routes>
       </BrowserRouter>
       ,

@@ -6,7 +6,7 @@ const Sidebar = () => {
             <div className="text-center p-3">
                 <img src={process.env.PUBLIC_URL + '/Avatar.png'} className='rounded-circle img-fluid' 
                 style={{maxWidth : '100px'}} alt='dp'/>
-                <h6>Oluwaseun Matanmi</h6>
+                <h6>Olawale Toheeb </h6>
             </div>
             <div className="px-5">
                 <NavLink className='sidebar__link' to='/'>
